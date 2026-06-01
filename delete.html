@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exclusão de Dados — Somma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:     #f9f8f6;
+    --bg-2:   #f2f0ec;
+    --border: #e4e1db;
+    --text-1: #1a1916;
+    --text-2: #5c5a54;
+    --text-3: #9a9890;
+    --font:   'Plus Jakarta Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .header-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+  .brand span { color: var(--text-3); }
+  .header-meta { font-size: 11px; color: var(--text-3); letter-spacing: 0.04em; }
+
+  main {
+    flex: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+    width: 100%;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--text-2); }
+
+  .lead {
+    font-size: 15px;
+    color: var(--text-2);
+    max-width: 520px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  p { font-size: 14px; color: var(--text-2); margin-bottom: 12px; line-height: 1.8; }
+  ul { margin: 10px 0 14px 20px; }
+  li { font-size: 14px; color: var(--text-2); margin-bottom: 6px; line-height: 1.7; }
+  strong { color: var(--text-1); font-weight: 500; }
+
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 32px;
+  }
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .steps li::before {
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-2);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .steps li span { font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+  .form-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 24px 0;
+  }
+
+  .field-label {
+    font-size: 11px;
+    color: var(--text-2);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text-1);
+    outline: none;
+    transition: border-color 0.15s;
+    margin-bottom: 18px;
+  }
+  input:focus, textarea:focus { border-color: #aaa8a0; }
+  textarea { resize: vertical; min-height: 100px; }
+
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    background: var(--text-1);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-submit:hover { opacity: 0.85; }
+
+  .success-msg {
+    display: none;
+    background: #edf7f1;
+    border: 1px solid #b6e0c8;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #2d6a4a;
+    margin-top: 16px;
+  }
+
+  .contact-card {
+    background: var(--text-1);
+    color: #f9f8f6;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-top: 16px;
+  }
+  .contact-card .label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(249,248,246,0.4);
+    margin-bottom: 4px;
+  }
+  .contact-card .value {
+    font-size: 14px;
+    color: rgba(249,248,246,0.85);
+    margin-bottom: 16px;
+  }
+  .contact-card .value:last-child { margin-bottom: 0; }
+  .contact-card a { color: rgba(249,248,246,0.65); }
+
+  .info-box {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid #aaa8a0;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.7;
+    margin: 16px 0;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-2);
+  }
+  .footer-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-brand { font-size: 13px; font-weight: 500; }
+  .footer-meta { font-size: 11px; color: var(--text-3); }
+
+  @media (max-width: 560px) {
+    main { padding: 40px 20px 60px; }
+    .form-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">Somma<span>.</span></div>
+    <div class="header-meta">Documentos legais</div>
+  </div>
+</header>
+
+<main>
+  <div class="hero-tag">Privacidade &amp; dados</div>
+  <h1>Exclusão de <em>dados do usuário</em></h1>
+  <p class="lead">Você pode solicitar a exclusão de todos os dados pessoais coletados pela Somma em conexão com o uso de nossas ferramentas e integrações com plataformas de terceiros, incluindo o Meta (Facebook e Instagram).</p>
+
+  <hr class="divider" />
+
+  <h2>Como funciona</h2>
+  <p>Ao receber uma solicitação de exclusão, a Somma irá:</p>
+  <ul>
+    <li>Identificar todos os dados pessoais associados ao seu usuário em nossos sistemas;</li>
+    <li>Remover permanentemente esses dados de nossas ferramentas e dashboards internos;</li>
+    <li>Revogar quaisquer tokens de acesso vinculados à sua conta;</li>
+    <li>Confirmar a exclusão por e-mail em até <strong>30 dias corridos</strong>.</li>
+  </ul>
+
+  <div class="info-box">
+    Dados de campanhas publicitárias obtidos via API do Meta são exibidos em tempo real e não são armazenados permanentemente em nossos servidores. A exclusão se aplica a dados de contato, logs de acesso e quaisquer informações pessoais coletadas diretamente pela Somma.
+  </div>
+
+  <hr class="divider" />
+
+  <h2>Solicitar exclusão</h2>
+  <p>Preencha o formulário abaixo ou entre em contato diretamente pelo e-mail indicado. Todas as solicitações são processadas manualmente e respondidas em até 30 dias.</p>
+
+  <div class="form-card">
+    <label class="field-label" for="field-name">Nome completo</label>
+    <input type="text" id="field-name" placeholder="Seu nome completo" />
+
+    <label class="field-label" for="field-email">E-mail vinculado à conta</label>
+    <input type="email" id="field-email" placeholder="email@exemplo.com" />
+
+    <label class="field-label" for="field-uid">ID do usuário Facebook (opcional)</label>
+    <input type="text" id="field-uid" placeholder="Ex: 100090XXXXXXXXX" />
+
+    <label class="field-label" for="field-detail">Detalhes adicionais (opcional)</label>
+    <textarea id="field-detail" placeholder="Descreva quais dados deseja excluir ou qualquer informação adicional..."></textarea>
+
+    <button class="btn-submit" onclick="submitRequest()">
+      Enviar solicitação
+    </button>
+
+    <div class="success-msg" id="success-msg">
+      ✓ Solicitação recebida. Entraremos em contato pelo e-mail informado em até 30 dias úteis para confirmar a exclusão dos seus dados.
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <h2>Contato direto</h2>
+  <p>Prefere solicitar por e-mail? Entre em contato diretamente:</p>
+  <div class="contact-card">
+    <div class="label">E-mail para exclusão de dados</div>
+    <div class="value"><a href="mailto:privacidade@somma.com.br">privacidade@somma.com.br</a></div>
+    <div class="label">Prazo de resposta</div>
+    <div class="value">Até 30 dias corridos</div>
+    <div class="label">Empresa responsável</div>
+    <div class="value">Somma — Agência de Marketing e Consultoria · Curitiba, PR</div>
+  </div>
+
+  <hr class="divider" />
+
+  <h2>Exclusão via Meta</h2>
+  <p>Você também pode revogar o acesso da Somma aos seus dados diretamente pela plataforma do Meta:</p>
+  <ol class="steps">
+    <li><span>Acesse <strong>facebook.com/settings</strong> e vá em <strong>Segurança e login → Apps e sites</strong>.</span></li>
+    <li><span>Localize o app <strong>Somma Dashboard</strong> na lista de apps conectados.</span></li>
+    <li><span>Clique em <strong>Remover</strong> para revogar o acesso imediatamente.</span></li>
+    <li><span>Para exclusão completa dos dados, envie também uma solicitação pelo formulário acima ou por e-mail.</span></li>
+  </ol>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Somma · Documentos Legais</div>
+    <div class="footer-meta">Versão 1.0 · Vigência: 01/06/2026 · Curitiba, PR</div>
+  </div>
+</footer>
+
+<script>
+function submitRequest() {
+  const name  = document.getElementById('field-name').value.trim();
+  const email = document.getElementById('field-email').value.trim();
+
+  if (!name || !email) {
+    alert('Por favor, preencha pelo menos o nome e o e-mail.');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    document.getElementById('success-msg').style.display = 'block';
+    btn.textContent = 'Solicitação enviada';
+    document.getElementById('field-name').value = '';
+    document.getElementById('field-email').value = '';
+    document.getElementById('field-uid').value = '';
+    document.getElementById('field-detail').value = '';
+  }, 800);
+}
+</script>
+
+</body>
+</html>
